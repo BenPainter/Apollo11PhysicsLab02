@@ -1,23 +1,15 @@
 /*************************************************************
  * 1. Name:
- *      Star Balls, Ben Painter
+ *      -your name-
  * 2. Assignment Name:
- *      Practice 02: Physics simulator
+ *      Lab 02: Apollo 11
  * 3. Assignment Description:
- *      Compute how the Apollo lander will move across the screen
+ *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
- *      The hardest part was understanding what formulas to use for the
- *      different calculations. It was great to have the formulas provided
- *      but with our limited knowledge of the differences between acceleration,
- *      velocity, and thrust, we were trying to figure out which formulas to
- *      to use and what exactly we were doing with each of the calculations.
- *      If there was a miscalculation we weren't exactly sure if the bug
- *      was in the formula, the way we putting the formula into C++, or if
- *      we just didn't understand what we were trying to accomplish exactly.
+ *      -a paragraph or two about how the assignment went for you-
  * 5. How long did it take for you to complete the assignment?
- *      -total time in hours: 4 hours
- **************************************************************/
-
+ *      -total time in hours: reading the assignment, submitting, and writing code-
+ *****************************************************************/
 
 #define _USE_MATH_DEFINES //Pi and Sqrt
 
@@ -25,6 +17,7 @@
 #include <math.h> // Sin and Cos
 #include <iostream>  // for CIN and COUT
 #include <string> // for strings
+#include <iomanip> // for setw
 using namespace std;
 
 #define WEIGHT 15103.00   // Weight in KG
@@ -209,31 +202,44 @@ int main()
     double dx = prompt("What is your horizontal velocity (m/s)? ");
     double dy = prompt("What is your vertical velocity (m/s)? ");
     double y = prompt("What is your altitude (m)? ");
-    double x = prompt("What is your position (m)? ");
+    double x = 0.0;
     double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-    double t = prompt("What is the time interval (s)? ");
+    double t = 1;
+    cout << "\nFor the next 5 seconds with the main engine on, "
+         << "the position of the lander is : \n\n";
 
-    // Loop through to display the New Position, New Velocity, and the Total Velocity five times.
-    for (int i = 0; i < 5; i++)
+    // Loop through to display the New Position, New Velocity, and the Total Velocity ten times.
+    for (int i = 0; i < 10; i++)
     {
+       // Allows user to change angle after 5 seconds
+       if (i == 5)
+       {
+          cout << endl;
+          aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
+          cout << "\nFor the next 5 seconds with the main engine on, "
+               << "the position of the lander is : \n\n";
+       }
+
         double aRadians = radiansToDegrees(aDegrees); // Angle in radians
         double totalThrust = computeAcceleration(THRUST, WEIGHT);  // Calculate the acceleration.
         double ddxThrust = computeHorizontalComp(radiansToDegrees(aDegrees), totalThrust); // Horizontal acceleration due to thrust
         double ddyThrust = computeVerticalComp(radiansToDegrees(aDegrees), totalThrust); // Vertical acceleration due to thrust
         double ddx = ddxThrust; // Total horizontal acceleration
         double ddy = ddyThrust + GRAVITY; // Total vertical acceleration
-        dx = computeVelocity(dx, ddx, t); // 
+        dx = computeVelocity(dx, ddx, t); 
         dy = computeVelocity(dy, ddy, t);
         double v = computeTotalComp(dx, dy); // Total velocity
         x = computeDistance(x, dx, ddx, t);
         y = computeDistance(y, dy, ddy, t);
 
-        // Output
+        // Formatting the output for Position, Velocity, Speed, Angle
         cout.setf(ios::fixed | ios::showpoint);
         cout.precision(2);
-        cout << "\tNew position:   (" << x << ", " << y << ")m\n";
-        cout << "\tNew velocity:   (" << dx << ", " << dy << ")m/s\n";
-        cout << "\tTotal velocity:  " << v << "m/s\n\n";
+        cout << setw(2) << i + 1 << "s - x, y:(" << x << ", " << y 
+             << ")m  dx, dy: (" << dx << ", " << dy << ")m/s  speed: " 
+             << v << "m/s  angle: " << aDegrees << "deg" << endl;
+
+
     }
 
     return 0;
