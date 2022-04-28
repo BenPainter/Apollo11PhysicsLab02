@@ -39,8 +39,8 @@ using namespace std;
  **************************************************/
 double computeDistance(double s, double v, double a, double t)
 {
-    // returns the new position
-    return s + (v * t) + (.5 * a * (t * t));
+   // returns the new position
+   return s + (v * t) + (.5 * a * (t * t));
 }
 
 /**************************************************
@@ -56,10 +56,10 @@ double computeDistance(double s, double v, double a, double t)
 ***************************************************/
 double computeAcceleration(double force, double mass)
 {
-    // Force is THRUST 
-    // Mass is WEIGHT
-    // returns the acceleration
-    return force / mass;
+   // Force is THRUST 
+   // Mass is WEIGHT
+   // returns the acceleration
+   return force / mass;
 }
 
 /***********************************************
@@ -78,8 +78,8 @@ double computeAcceleration(double force, double mass)
  ***********************************************/
 double computeVelocity(double v, double a, double t)
 {
-    // Calcaute x component of veolcity
-    return v + (a * t);
+   // Calcaute x component of veolcity
+   return v + (a * t);
 }
 
 
@@ -103,8 +103,8 @@ double computeVelocity(double v, double a, double t)
  ***********************************************/
 double computeVerticalComp(double a, double total)
 {
-    // Compute y componenent of acceleration
-    return (cos(a) * total);
+   // Compute y componenent of acceleration
+   return (cos(a) * total);
 }
 
 /***********************************************
@@ -127,10 +127,10 @@ double computeVerticalComp(double a, double total)
 ***********************************************/
 double computeHorizontalComp(double a, double total)
 {
-    // Compute x componenent of acceleration
-    // a is the radians from the degreesToRadians
-    // total is the output of computeAcceleration
-    return sin(a) * total;
+   // Compute x componenent of acceleration
+   // a is the radians from the degreesToRadians
+   // total is the output of computeAcceleration
+   return sin(a) * total;
 }
 
 /************************************************
@@ -154,8 +154,8 @@ double computeHorizontalComp(double a, double total)
 ***********************************************/
 double computeTotalComp(double x, double y)
 {
-    // returns the total component 
-    return sqrt((x * x) + (y * y));
+   // returns the total component 
+   return sqrt((x * x) + (y * y));
 }
 
 
@@ -170,8 +170,8 @@ double computeTotalComp(double x, double y)
 **************************************************/
 double radiansToDegrees(double d)
 {
-    // returns the convertion of degrees to radians
-    return (d / 360.00) * (2.00 * M_PI);
+   // returns the convertion of degrees to radians
+   return (d / 360.00) * (2.00 * M_PI);
 }
 
 /**************************************************
@@ -184,12 +184,12 @@ double radiansToDegrees(double d)
 ***************************************************/
 double prompt(const char* message)
 {
-    double response;
-    cout << message;
-    cin >> response;
+   double response;
+   cout << message;
+   cin >> response;
 
-    // returns the response from the user
-    return response;
+   // returns the response from the user
+   return response;
 }
 
 /****************************************************************
@@ -198,49 +198,49 @@ double prompt(const char* message)
 ****************************************************************/
 int main()
 {
-    // Prompt for input and variables to be computed
-    double dx = prompt("What is your horizontal velocity (m/s)? ");
-    double dy = prompt("What is your vertical velocity (m/s)? ");
-    double y = prompt("What is your altitude (m)? ");
-    double x = 0.0;
-    double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-    double t = 1;
-    cout << "\nFor the next 5 seconds with the main engine on, "
-         << "the position of the lander is : \n\n";
+   // Prompt for input and variables to be computed
+   double dx = prompt("What is your horizontal velocity (m/s)? ");
+   double dy = prompt("What is your vertical velocity (m/s)? ");
+   double y = prompt("What is your altitude (m)? ");
+   double x = 0.0;
+   double aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
+   double t = 1;
+   cout << "\nFor the next 5 seconds with the main engine on, "
+        << "the position of the lander is : \n\n";
 
-    // Loop through to display the New Position, New Velocity, and the Total Velocity ten times.
-    for (int i = 0; i < 10; i++)
-    {
-       // Allows user to change angle after 5 seconds
-       if (i == 5)
-       {
-          cout << endl;
-          aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
-          cout << "\nFor the next 5 seconds with the main engine on, "
-               << "the position of the lander is : \n\n";
-       }
+   // Loop through to display the New Position, New Velocity, and the Total Velocity ten times.
+   for (int i = 0; i < 10; i++)
+   {
+      // Allows user to change angle after 5 seconds
+      if (i == 5)
+      {
+         cout << endl;
+         aDegrees = prompt("What is the angle of the LM where 0 is up (degrees)? ");
+         cout << "\nFor the next 5 seconds with the main engine on, "
+              << "the position of the lander is : \n\n";
+      }
 
-        double aRadians = radiansToDegrees(aDegrees); // Angle in radians
-        double totalThrust = computeAcceleration(THRUST, WEIGHT);  // Calculate the acceleration.
-        double ddxThrust = computeHorizontalComp(radiansToDegrees(aDegrees), totalThrust); // Horizontal acceleration due to thrust
-        double ddyThrust = computeVerticalComp(radiansToDegrees(aDegrees), totalThrust); // Vertical acceleration due to thrust
-        double ddx = ddxThrust; // Total horizontal acceleration
-        double ddy = ddyThrust + GRAVITY; // Total vertical acceleration
-        dx = computeVelocity(dx, ddx, t); 
-        dy = computeVelocity(dy, ddy, t);
-        double v = computeTotalComp(dx, dy); // Total velocity
-        x = computeDistance(x, dx, ddx, t);
-        y = computeDistance(y, dy, ddy, t);
+       double aRadians = radiansToDegrees(aDegrees); // Angle in radians
+       double totalThrust = computeAcceleration(THRUST, WEIGHT);  // Calculate the acceleration.
+       double ddxThrust = computeHorizontalComp(radiansToDegrees(aDegrees), totalThrust); // Horizontal acceleration due to thrust
+       double ddyThrust = computeVerticalComp(radiansToDegrees(aDegrees), totalThrust); // Vertical acceleration due to thrust
+       double ddx = ddxThrust; // Total horizontal acceleration
+       double ddy = ddyThrust + GRAVITY; // Total vertical acceleration
+       dx = computeVelocity(dx, ddx, t); 
+       dy = computeVelocity(dy, ddy, t);
+       double v = computeTotalComp(dx, dy); // Total velocity
+       x = computeDistance(x, dx, ddx, t);
+       y = computeDistance(y, dy, ddy, t);
 
-        // Formatting the output for Position, Velocity, Speed, Angle
-        cout.setf(ios::fixed | ios::showpoint);
-        cout.precision(2);
-        cout << setw(2) << i + 1 << "s - x, y:(" << x << ", " << y 
-             << ")m  dx, dy: (" << dx << ", " << dy << ")m/s  speed: " 
-             << v << "m/s  angle: " << aDegrees << "deg" << endl;
+       // Formatting the output for Position, Velocity, Speed, Angle
+       cout.setf(ios::fixed | ios::showpoint);
+       cout.precision(2);
+       cout << setw(2) << i + 1 << "s - x, y:(" << x << ", " << y 
+            << ")m  dx, dy: (" << dx << ", " << dy << ")m/s  speed: " 
+            << v << "m/s  angle: " << aDegrees << "deg" << endl;
 
 
-    }
+   }
 
-    return 0;
+   return 0;
 }
