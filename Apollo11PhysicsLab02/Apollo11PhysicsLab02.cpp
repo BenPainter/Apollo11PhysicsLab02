@@ -1,14 +1,19 @@
 /*************************************************************
  * 1. Name:
- *      -your name-
+ *      Ben Painter, Star Balls
  * 2. Assignment Name:
  *      Lab 02: Apollo 11
  * 3. Assignment Description:
  *      Simulate the Apollo 11 landing
  * 4. What was the hardest part? Be as specific as possible.
- *      -a paragraph or two about how the assignment went for you-
+ *      Because of the assignment we did figuring out the computations we 
+ *      would need for the lunar module it made this assignment easier. The 
+ *      hardest part was figuring out the best way to do the output for ten
+ *      seconds with a prompt to the user after the fifth second to ask the
+ *      user for another angle.
  * 5. How long did it take for you to complete the assignment?
- *      -total time in hours: reading the assignment, submitting, and writing code-
+ *      The assignment took us about an hour to an hour and a half to
+ *      complete. 
  *****************************************************************/
 
 #define _USE_MATH_DEFINES //Pi and Sqrt
@@ -208,7 +213,8 @@ int main()
    cout << "\nFor the next 5 seconds with the main engine on, "
         << "the position of the lander is : \n\n";
 
-   // Loop through to display the New Position, New Velocity, and the Total Velocity ten times.
+   // Loop through to display the New Position, New Velocity, and the Total 
+   // Velocity ten times.
    for (int i = 0; i < 10; i++)
    {
       // Allows user to change angle after 5 seconds
@@ -219,16 +225,29 @@ int main()
          cout << "\nFor the next 5 seconds with the main engine on, "
               << "the position of the lander is : \n\n";
       }
+       // Call the functions needed to compute Position, Velocity, Speed, Angle
+       // Angle in radians
+       double aRadians = radiansToDegrees(aDegrees); 
 
-       double aRadians = radiansToDegrees(aDegrees); // Angle in radians
-       double totalThrust = computeAcceleration(THRUST, WEIGHT);  // Calculate the acceleration.
-       double ddxThrust = computeHorizontalComp(radiansToDegrees(aDegrees), totalThrust); // Horizontal acceleration due to thrust
-       double ddyThrust = computeVerticalComp(radiansToDegrees(aDegrees), totalThrust); // Vertical acceleration due to thrust
-       double ddx = ddxThrust; // Total horizontal acceleration
-       double ddy = ddyThrust + GRAVITY; // Total vertical acceleration
+       // Calculate the acceleration.
+       double totalThrust = computeAcceleration(THRUST, WEIGHT); 
+
+       // Horizontal acceleration due to thrust
+       double ddxThrust = computeHorizontalComp(radiansToDegrees(aDegrees), totalThrust); 
+
+       // Vertical acceleration due to thrust
+       double ddyThrust = computeVerticalComp(radiansToDegrees(aDegrees), totalThrust);
+
+       // Total horizontal acceleration
+       double ddx = ddxThrust; 
+
+       // Total vertical acceleration
+       double ddy = ddyThrust + GRAVITY; 
        dx = computeVelocity(dx, ddx, t); 
        dy = computeVelocity(dy, ddy, t);
-       double v = computeTotalComp(dx, dy); // Total velocity
+
+       // Total velocity
+       double v = computeTotalComp(dx, dy); 
        x = computeDistance(x, dx, ddx, t);
        y = computeDistance(y, dy, ddy, t);
 
