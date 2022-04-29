@@ -23,6 +23,7 @@
 #include <iostream>  // for CIN and COUT
 #include <string> // for strings
 #include <iomanip> // for setw
+#include <assert.h> // for asserts
 using namespace std;
 
 #define WEIGHT 15103.00   // Weight in KG
@@ -63,6 +64,8 @@ double computeAcceleration(double force, double mass)
 {
    // Force is THRUST 
    // Mass is WEIGHT
+   // Mass cannot be zero since you're dividing by it.
+   assert(mass != 0.0);
    // returns the acceleration
    return force / mass;
 }
